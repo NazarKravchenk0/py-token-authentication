@@ -14,4 +14,3 @@ class IsAdminOrIfAuthenticatedReadOnly(BasePermission):
             return True
 
         return False
-
