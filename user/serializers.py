@@ -25,8 +25,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
     def validate_password(self, value: str) -> str:
-        # Требование задачи: >= 5 символов уже проверяет min_length.
-        # Но validate_password — хорошая практика (может быть включена стандартная валидация Django).
         validate_password(value)
         return value
 
@@ -36,3 +34,4 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+

@@ -6,3 +6,4 @@ urlpatterns = [
     path("api/cinema/", include("cinema.urls")),
     path("api/user/", include("user.urls")),
 ]
+

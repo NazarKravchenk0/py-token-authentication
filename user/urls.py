@@ -7,3 +7,4 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="user-login"),
     path("me/", ManageUserView.as_view(), name="user-me"),
 ]
+

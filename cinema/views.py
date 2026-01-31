@@ -2,8 +2,8 @@ from rest_framework import mixins, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from cinema.permissions import IsAdminOrIfAuthenticatedReadOnly
 from cinema.models import Actor, CinemaHall, Genre, Movie, MovieSession, Order
+from cinema.permissions import IsAdminOrIfAuthenticatedReadOnly
 from cinema.serializers import (
     ActorSerializer,
     CinemaHallSerializer,
@@ -68,8 +68,15 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSessionSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
-    # тут по ТЗ разрешены: list, retrieve, create, update, partial_update, delete
-    http_method_names = ["get", "post", "put", "patch", "delete", "head", "options"]
+    http_method_names = [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+    ]
 
 
 class OrderViewSet(
@@ -80,9 +87,6 @@ class OrderViewSet(
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     authentication_classes = (TokenAuthentication,)
-    # По ТЗ: “We should give the ability for authenticated users to create order”
-    # + “regular users can’t change other data besides their orders”
-    # Логично: список/создание заказов — только для auth.
     permission_classes = (IsAuthenticated,)
     http_method_names = ["get", "post", "head", "options"]
 
@@ -94,3 +98,4 @@ class OrderViewSet(
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+

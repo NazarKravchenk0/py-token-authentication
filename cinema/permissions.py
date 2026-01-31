@@ -10,9 +10,8 @@ class IsAdminOrIfAuthenticatedReadOnly(BasePermission):
         if user and user.is_staff:
             return True
 
-        if request.method in SAFE_METHODS:
+        if request.method in SAFE_METHODS and user.is_authenticated:
             return True
 
-        # Любые небезопасные методы (POST/PUT/PATCH/DELETE)
-        # разрешаем только админам.
         return False
+
